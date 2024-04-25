@@ -21,7 +21,7 @@ return {
     return function(xs)
       local l = #xs
       local ss = {}
-      for i = 1, l do ss[i] = f(xs[i - 1]) end
+      for i = 1, l do ss[i] = f(xs[i]) end
       return "[" .. table.concat(ss, ",") .. "]"
     end
   end)
