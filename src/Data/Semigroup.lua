@@ -4,7 +4,15 @@ return {
     return function(ys)
       if #xs == 0 then return ys end
       if #ys == 0 then return xs end
-      return table.concat(xs, ys)
+      local result = {}
+      for index, value in ipairs(xs) do
+        result[index] = value
+      end
+      local offset = #result
+      for index, value in ipairs(ys) do
+        result[index + offset] = value
+      end
+      return result
     end
   end)
 }
