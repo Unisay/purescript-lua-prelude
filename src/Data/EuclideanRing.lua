@@ -1,5 +1,6 @@
 return {
-  intDegree = (function(x) return math.min(math.abs(x), math.maxinteger) end),
+  -- math.maxinteger is Lua 5.3+; PureScript Int is 32-bit
+  intDegree = (function(x) return math.min(math.abs(x), 2147483647) end),
   intDiv = (function(x)
     return function(y)
       if y == 0 then return 0 end
