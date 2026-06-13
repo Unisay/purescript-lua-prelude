@@ -1,5 +1,6 @@
+-- math.maxinteger is Lua 5.3+; PureScript Int is 32-bit, hence the
+-- literal bound in intDegree.
 return {
-  -- math.maxinteger is Lua 5.3+; PureScript Int is 32-bit
   intDegree = (function(x) return math.min(math.abs(x), 2147483647) end),
   intDiv = (function(x)
     return function(y)
