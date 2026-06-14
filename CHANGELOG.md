@@ -9,6 +9,7 @@ Breaking changes:
 New features:
 
 Bugfixes:
+- Fixed `Semigroup.append` broken for `Array` (#4 by @Renegatto)
 
 Other improvements:
 
