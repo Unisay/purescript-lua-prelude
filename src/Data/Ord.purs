@@ -123,7 +123,8 @@ foreign import ordCharImpl
   -> Char
   -> Ordering
 
-foreign import ordArrayImpl :: forall a. (a -> a -> Int) -> Array a -> Array a -> Int
+foreign import ordArrayImpl
+  :: forall a. (a -> a -> Int) -> Array a -> Array a -> Int
 
 instance ordOrdering :: Ord Ordering where
   compare LT LT = EQ

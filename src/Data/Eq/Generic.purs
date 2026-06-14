@@ -21,8 +21,13 @@ instance genericEqSum :: (GenericEq a, GenericEq b) => GenericEq (Sum a b) where
   genericEq' (Inr b1) (Inr b2) = genericEq' b1 b2
   genericEq' _ _ = false
 
-instance genericEqProduct :: (GenericEq a, GenericEq b) => GenericEq (Product a b) where
-  genericEq' (Product a1 b1) (Product a2 b2) = genericEq' a1 a2 && genericEq' b1 b2
+instance genericEqProduct ::
+  ( GenericEq a
+  , GenericEq b
+  ) =>
+  GenericEq (Product a b) where
+  genericEq' (Product a1 b1) (Product a2 b2) = genericEq' a1 a2 && genericEq' b1
+    b2
 
 instance genericEqConstructor :: GenericEq a => GenericEq (Constructor name a) where
   genericEq' (Constructor a1) (Constructor a2) = genericEq' a1 a2

@@ -90,15 +90,33 @@ lift2 f a b = f <$> a <*> b
 
 -- | Lift a function of three arguments to a function which accepts and returns
 -- | values wrapped with the type constructor `f`.
-lift3 :: forall a b c d f. Apply f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
+lift3
+  :: forall a b c d f. Apply f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 lift3 f a b c = f <$> a <*> b <*> c
 
 -- | Lift a function of four arguments to a function which accepts and returns
 -- | values wrapped with the type constructor `f`.
-lift4 :: forall a b c d e f. Apply f => (a -> b -> c -> d -> e) -> f a -> f b -> f c -> f d -> f e
+lift4
+  :: forall a b c d e f
+   . Apply f
+  => (a -> b -> c -> d -> e)
+  -> f a
+  -> f b
+  -> f c
+  -> f d
+  -> f e
 lift4 f a b c d = f <$> a <*> b <*> c <*> d
 
 -- | Lift a function of five arguments to a function which accepts and returns
 -- | values wrapped with the type constructor `f`.
-lift5 :: forall a b c d e f g. Apply f => (a -> b -> c -> d -> e -> g) -> f a -> f b -> f c -> f d -> f e -> f g
+lift5
+  :: forall a b c d e f g
+   . Apply f
+  => (a -> b -> c -> d -> e -> g)
+  -> f a
+  -> f b
+  -> f c
+  -> f d
+  -> f e
+  -> f g
 lift5 f a b c d e = f <$> a <*> b <*> c <*> d <*> e

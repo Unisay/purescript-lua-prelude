@@ -18,7 +18,8 @@ foreign import unsafeGet :: forall r a. String -> Record r -> a
 -- |
 -- | The output record's row is unspecified so can be coerced to any row. If the
 -- | output type is incorrect it will cause a runtime error elsewhere.
-foreign import unsafeSet :: forall r1 r2 a. String -> a -> Record r1 -> Record r2
+foreign import unsafeSet
+  :: forall r1 r2 a. String -> a -> Record r1 -> Record r2
 
 -- | Unsafely removes a value on a record, using a string for the key.
 -- |

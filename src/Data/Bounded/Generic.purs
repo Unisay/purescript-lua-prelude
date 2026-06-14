@@ -23,10 +23,16 @@ instance genericBottomArgument :: Bounded a => GenericBottom (Argument a) where
 instance genericBottomSum :: GenericBottom a => GenericBottom (Sum a b) where
   genericBottom' = Inl genericBottom'
 
-instance genericBottomProduct :: (GenericBottom a, GenericBottom b) => GenericBottom (Product a b) where
+instance genericBottomProduct ::
+  ( GenericBottom a
+  , GenericBottom b
+  ) =>
+  GenericBottom (Product a b) where
   genericBottom' = Product genericBottom' genericBottom'
 
-instance genericBottomConstructor :: GenericBottom a => GenericBottom (Constructor name a) where
+instance genericBottomConstructor ::
+  GenericBottom a =>
+  GenericBottom (Constructor name a) where
   genericBottom' = Constructor genericBottom'
 
 class GenericTop a where
@@ -41,10 +47,16 @@ instance genericTopArgument :: Bounded a => GenericTop (Argument a) where
 instance genericTopSum :: GenericTop b => GenericTop (Sum a b) where
   genericTop' = Inr genericTop'
 
-instance genericTopProduct :: (GenericTop a, GenericTop b) => GenericTop (Product a b) where
+instance genericTopProduct ::
+  ( GenericTop a
+  , GenericTop b
+  ) =>
+  GenericTop (Product a b) where
   genericTop' = Product genericTop' genericTop'
 
-instance genericTopConstructor :: GenericTop a => GenericTop (Constructor name a) where
+instance genericTopConstructor ::
+  GenericTop a =>
+  GenericTop (Constructor name a) where
   genericTop' = Constructor genericTop'
 
 -- | A `Generic` implementation of the `bottom` member from the `Bounded` type class.

@@ -23,7 +23,11 @@ instance genericShowNoConstructors :: GenericShow NoConstructors where
 instance genericShowArgsNoArguments :: GenericShowArgs NoArguments where
   genericShowArgs _ = []
 
-instance genericShowSum :: (GenericShow a, GenericShow b) => GenericShow (Sum a b) where
+instance genericShowSum ::
+  ( GenericShow a
+  , GenericShow b
+  ) =>
+  GenericShow (Sum a b) where
   genericShow' (Inl a) = genericShow' a
   genericShow' (Inr b) = genericShow' b
 

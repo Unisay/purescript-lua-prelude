@@ -13,10 +13,16 @@ class GenericMonoid a where
 instance genericMonoidNoArguments :: GenericMonoid NoArguments where
   genericMempty' = NoArguments
 
-instance genericMonoidProduct :: (GenericMonoid a, GenericMonoid b) => GenericMonoid (Product a b) where
+instance genericMonoidProduct ::
+  ( GenericMonoid a
+  , GenericMonoid b
+  ) =>
+  GenericMonoid (Product a b) where
   genericMempty' = Product genericMempty' genericMempty'
 
-instance genericMonoidConstructor :: GenericMonoid a => GenericMonoid (Constructor name a) where
+instance genericMonoidConstructor ::
+  GenericMonoid a =>
+  GenericMonoid (Constructor name a) where
   genericMempty' = Constructor genericMempty'
 
 instance genericMonoidArgument :: Monoid a => GenericMonoid (Argument a) where

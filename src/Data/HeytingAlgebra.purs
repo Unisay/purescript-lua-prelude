@@ -92,7 +92,11 @@ instance heytingAlgebraProxy :: HeytingAlgebra (Proxy a) where
   not _ = Proxy
   tt = Proxy
 
-instance heytingAlgebraRecord :: (RL.RowToList row list, HeytingAlgebraRecord list row row) => HeytingAlgebra (Record row) where
+instance heytingAlgebraRecord ::
+  ( RL.RowToList row list
+  , HeytingAlgebraRecord list row row
+  ) =>
+  HeytingAlgebra (Record row) where
   ff = ffRecord (Proxy :: Proxy list) (Proxy :: Proxy row)
   tt = ttRecord (Proxy :: Proxy list) (Proxy :: Proxy row)
   conj = conjRecord (Proxy :: Proxy list)
@@ -106,7 +110,8 @@ foreign import boolNot :: Boolean -> Boolean
 
 -- | A class for records where all fields have `HeytingAlgebra` instances, used
 -- | to implement the `HeytingAlgebra` instance for records.
-class HeytingAlgebraRecord :: RL.RowList Type -> Row Type -> Row Type -> Constraint
+class HeytingAlgebraRecord
+  :: RL.RowList Type -> Row Type -> Row Type -> Constraint
 class HeytingAlgebraRecord rowlist row subrow | rowlist -> subrow where
   ffRecord :: Proxy rowlist -> Proxy row -> Record subrow
   ttRecord :: Proxy rowlist -> Proxy row -> Record subrow

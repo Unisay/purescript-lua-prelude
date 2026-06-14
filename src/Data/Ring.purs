@@ -45,7 +45,11 @@ instance ringFn :: Ring b => Ring (a -> b) where
 instance ringProxy :: Ring (Proxy a) where
   sub _ _ = Proxy
 
-instance ringRecord :: (RL.RowToList row list, RingRecord list row row) => Ring (Record row) where
+instance ringRecord ::
+  ( RL.RowToList row list
+  , RingRecord list row row
+  ) =>
+  Ring (Record row) where
   sub = subRecord (Proxy :: Proxy list)
 
 -- | `negate x` can be used as a shorthand for `zero - x`.
@@ -58,7 +62,10 @@ foreign import numSub :: Number -> Number -> Number
 -- | A class for records where all fields have `Ring` instances, used to
 -- | implement the `Ring` instance for records.
 class RingRecord :: RL.RowList Type -> Row Type -> Row Type -> Constraint
-class SemiringRecord rowlist row subrow <= RingRecord rowlist row subrow | rowlist -> subrow where
+class
+  SemiringRecord rowlist row subrow <=
+  RingRecord rowlist row subrow
+  | rowlist -> subrow where
   subRecord :: Proxy rowlist -> Record row -> Record row -> Record subrow
 
 instance ringRecordNil :: RingRecord RL.Nil row () where

@@ -24,13 +24,22 @@ class HeytingAlgebra a <= BooleanAlgebra a
 instance booleanAlgebraBoolean :: BooleanAlgebra Boolean
 instance booleanAlgebraUnit :: BooleanAlgebra Unit
 instance booleanAlgebraFn :: BooleanAlgebra b => BooleanAlgebra (a -> b)
-instance booleanAlgebraRecord :: (RL.RowToList row list, BooleanAlgebraRecord list row row) => BooleanAlgebra (Record row)
+instance booleanAlgebraRecord ::
+  ( RL.RowToList row list
+  , BooleanAlgebraRecord list row row
+  ) =>
+  BooleanAlgebra (Record row)
+
 instance booleanAlgebraProxy :: BooleanAlgebra (Proxy a)
 
 -- | A class for records where all fields have `BooleanAlgebra` instances, used
 -- | to implement the `BooleanAlgebra` instance for records.
-class BooleanAlgebraRecord :: RL.RowList Type -> Row Type -> Row Type -> Constraint
-class HeytingAlgebraRecord rowlist row subrow <= BooleanAlgebraRecord rowlist row subrow | rowlist -> subrow
+class BooleanAlgebraRecord
+  :: RL.RowList Type -> Row Type -> Row Type -> Constraint
+class
+  HeytingAlgebraRecord rowlist row subrow <=
+  BooleanAlgebraRecord rowlist row subrow
+  | rowlist -> subrow
 
 instance booleanAlgebraRecordNil :: BooleanAlgebraRecord RL.Nil row ()
 

@@ -19,7 +19,9 @@ derive instance eq1Multiplicative :: Eq1 Multiplicative
 derive newtype instance ordMultiplicative :: Ord a => Ord (Multiplicative a)
 derive instance ord1Multiplicative :: Ord1 Multiplicative
 
-derive newtype instance boundedMultiplicative :: Bounded a => Bounded (Multiplicative a)
+derive newtype instance boundedMultiplicative ::
+  Bounded a =>
+  Bounded (Multiplicative a)
 
 instance showMultiplicative :: Show a => Show (Multiplicative a) where
   show (Multiplicative a) = "(Multiplicative " <> show a <> ")"

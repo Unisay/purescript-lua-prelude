@@ -22,16 +22,26 @@ instance genericSemiringArgument :: Semiring a => GenericSemiring (Argument a) w
   genericMul' (Argument x) (Argument y) = Argument (mul x y)
   genericOne' = Argument one
 
-instance genericSemiringProduct :: (GenericSemiring a, GenericSemiring b) => GenericSemiring (Product a b) where
-  genericAdd' (Product a1 b1) (Product a2 b2) = Product (genericAdd' a1 a2) (genericAdd' b1 b2)
+instance genericSemiringProduct ::
+  ( GenericSemiring a
+  , GenericSemiring b
+  ) =>
+  GenericSemiring (Product a b) where
+  genericAdd' (Product a1 b1) (Product a2 b2) = Product (genericAdd' a1 a2)
+    (genericAdd' b1 b2)
   genericZero' = Product genericZero' genericZero'
-  genericMul' (Product a1 b1) (Product a2 b2) = Product (genericMul' a1 a2) (genericMul' b1 b2)
+  genericMul' (Product a1 b1) (Product a2 b2) = Product (genericMul' a1 a2)
+    (genericMul' b1 b2)
   genericOne' = Product genericOne' genericOne'
 
-instance genericSemiringConstructor :: GenericSemiring a => GenericSemiring (Constructor name a) where
-  genericAdd' (Constructor a1) (Constructor a2) = Constructor (genericAdd' a1 a2)
+instance genericSemiringConstructor ::
+  GenericSemiring a =>
+  GenericSemiring (Constructor name a) where
+  genericAdd' (Constructor a1) (Constructor a2) = Constructor
+    (genericAdd' a1 a2)
   genericZero' = Constructor genericZero'
-  genericMul' (Constructor a1) (Constructor a2) = Constructor (genericMul' a1 a2)
+  genericMul' (Constructor a1) (Constructor a2) = Constructor
+    (genericMul' a1 a2)
   genericOne' = Constructor genericOne'
 
 -- | A `Generic` implementation of the `zero` member from the `Semiring` type class.
