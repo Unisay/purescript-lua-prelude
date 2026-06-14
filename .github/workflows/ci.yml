@@ -21,5 +21,8 @@ jobs:
       - name: Build
         run: nix develop -c ./scripts/build
 
+      - name: Test
+        run: if [ -f scripts/test ]; then nix develop -c ./scripts/test; fi
+
       - name: Luacheck
         run: nix develop -c luacheck --quiet --std min src/
