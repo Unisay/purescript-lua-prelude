@@ -99,7 +99,11 @@ instance semiringPair :: (Semiring a, Semiring b) => Semiring (Pair a b) where
 instance ringPair :: (Ring a, Ring b) => Ring (Pair a b) where
   sub (Pair x1 y1) (Pair x2 y2) = Pair (sub x1 x2) (sub y1 y2)
 
-instance heytingAlgebraPair :: (HeytingAlgebra a, HeytingAlgebra b) => HeytingAlgebra (Pair a b) where
+instance heytingAlgebraPair ::
+  ( HeytingAlgebra a
+  , HeytingAlgebra b
+  ) =>
+  HeytingAlgebra (Pair a b) where
   tt = Pair tt tt
   ff = Pair ff ff
   implies (Pair x1 y1) (Pair x2 y2) = Pair (x1 `implies` x2) (y1 `implies` y2)
@@ -147,16 +151,21 @@ instance booleanAlgebraB1 :: BooleanAlgebra B1
 testGenericRep :: AlmostEff
 testGenericRep = do
   assert "Checking show" $
-    show (cons 1 (cons 2 Nil)) == "(Cons { head: 1, tail: (Cons { head: 2, tail: Nil }) })"
+    show (cons 1 (cons 2 Nil)) ==
+      "(Cons { head: 1, tail: (Cons { head: 2, tail: Nil }) })"
 
   assert "Checking show for generic types: Inl, NoArguments" $
-    show (G.from (Nil :: List Int)) == "(Inl (Constructor @\"Nil\" NoArguments))"
+    show (G.from (Nil :: List Int)) ==
+      "(Inl (Constructor @\"Nil\" NoArguments))"
 
-  assert "Checking show for generic types: Inr, Constructor, and Single Argument" $
-    show (G.from $ cons 1 Nil) == "(Inr (Constructor @\"Cons\" (Argument { head: 1, tail: Nil })))"
+  assert
+    "Checking show for generic types: Inr, Constructor, and Single Argument" $
+    show (G.from $ cons 1 Nil) ==
+      "(Inr (Constructor @\"Cons\" (Argument { head: 1, tail: Nil })))"
 
   assert "Checking show for generic types: Product" $
-    show (G.from $ Pair 1 2) == "(Constructor @\"Pair\" (Product (Argument 1) (Argument 2)))"
+    show (G.from $ Pair 1 2) ==
+      "(Constructor @\"Pair\" (Product (Argument 1) (Argument 2)))"
 
   assert "Checking equality" $
     cons 1 (cons 2 Nil) == cons 1 (cons 2 Nil)
@@ -198,13 +207,19 @@ testGenericRep = do
     (one :: A1) == A1 (Pair (Pair 1 { a: 1 }) { a: 1 })
 
   assert "Checking add" $
-    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) + A1 (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1 (Pair (Pair 150 { a: 40 }) { a: 60 })
+    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) + A1
+      (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1
+      (Pair (Pair 150 { a: 40 }) { a: 60 })
 
   assert "Checking mul" $
-    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) * A1 (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1 (Pair (Pair 5000 { a: 300 }) { a: 800 })
+    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) * A1
+      (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1
+      (Pair (Pair 5000 { a: 300 }) { a: 800 })
 
   assert "Checking sub" $
-    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) - A1 (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1 (Pair (Pair 50 { a: -20 }) { a: -20 })
+    A1 (Pair (Pair 100 { a: 10 }) { a: 20 }) - A1
+      (Pair (Pair 50 { a: 30 }) { a: 40 }) == A1
+      (Pair (Pair 50 { a: -20 }) { a: -20 })
 
   assert "Checking ff" $
     (ff :: B1) == B1 (Pair (Pair false { a: false }) { a: false })
@@ -213,10 +228,15 @@ testGenericRep = do
     (tt :: B1) == B1 (Pair (Pair true { a: true }) { a: true })
 
   assert "Checking conj" $
-    (B1 (Pair (Pair true { a: false }) { a: true }) && B1 (Pair (Pair false { a: false }) { a: true })) == B1 (Pair (Pair false { a: false }) { a: true })
+    ( B1 (Pair (Pair true { a: false }) { a: true }) && B1
+        (Pair (Pair false { a: false }) { a: true })
+    ) == B1 (Pair (Pair false { a: false }) { a: true })
 
   assert "Checking disj" $
-    (B1 (Pair (Pair true { a: false }) { a: true }) || B1 (Pair (Pair false { a: false }) { a: true })) == B1 (Pair (Pair true { a: false }) { a: true })
+    ( B1 (Pair (Pair true { a: false }) { a: true }) || B1
+        (Pair (Pair false { a: false }) { a: true })
+    ) == B1 (Pair (Pair true { a: false }) { a: true })
 
   assert "Checking not" $
-    not B1 (Pair (Pair true { a: false }) { a: true }) == B1 (Pair (Pair false { a: true }) { a: false })
+    not B1 (Pair (Pair true { a: false }) { a: true }) == B1
+      (Pair (Pair false { a: true }) { a: false })

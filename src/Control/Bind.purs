@@ -132,7 +132,8 @@ composeKleisli f g a = f a >>= g
 infixr 1 composeKleisli as >=>
 
 -- | Backwards Kleisli composition.
-composeKleisliFlipped :: forall a b c m. Bind m => (b -> m c) -> (a -> m b) -> a -> m c
+composeKleisliFlipped
+  :: forall a b c m. Bind m => (b -> m c) -> (a -> m b) -> a -> m c
 composeKleisliFlipped f g a = f =<< g a
 
 infixr 1 composeKleisliFlipped as <=<

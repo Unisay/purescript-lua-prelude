@@ -80,7 +80,11 @@ instance semiringProxy :: Semiring (Proxy a) where
   one = Proxy
   zero = Proxy
 
-instance semiringRecord :: (RL.RowToList row list, SemiringRecord list row row) => Semiring (Record row) where
+instance semiringRecord ::
+  ( RL.RowToList row list
+  , SemiringRecord list row row
+  ) =>
+  Semiring (Record row) where
   add = addRecord (Proxy :: Proxy list)
   mul = mulRecord (Proxy :: Proxy list)
   one = oneRecord (Proxy :: Proxy list) (Proxy :: Proxy row)

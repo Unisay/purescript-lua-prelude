@@ -22,18 +22,25 @@ instance genericOrdSum :: (GenericOrd a, GenericOrd b) => GenericOrd (Sum a b) w
   genericCompare' (Inl _) (Inr _) = LT
   genericCompare' (Inr _) (Inl _) = GT
 
-instance genericOrdProduct :: (GenericOrd a, GenericOrd b) => GenericOrd (Product a b) where
+instance genericOrdProduct ::
+  ( GenericOrd a
+  , GenericOrd b
+  ) =>
+  GenericOrd (Product a b) where
   genericCompare' (Product a1 b1) (Product a2 b2) =
     case genericCompare' a1 a2 of
       EQ -> genericCompare' b1 b2
       other -> other
 
-instance genericOrdConstructor :: GenericOrd a => GenericOrd (Constructor name a) where
+instance genericOrdConstructor ::
+  GenericOrd a =>
+  GenericOrd (Constructor name a) where
   genericCompare' (Constructor a1) (Constructor a2) = genericCompare' a1 a2
 
 instance genericOrdArgument :: Ord a => GenericOrd (Argument a) where
   genericCompare' (Argument a1) (Argument a2) = compare a1 a2
 
 -- | A `Generic` implementation of the `compare` member from the `Ord` type class.
-genericCompare :: forall a rep. Generic a rep => GenericOrd rep => a -> a -> Ordering
+genericCompare
+  :: forall a rep. Generic a rep => GenericOrd rep => a -> a -> Ordering
 genericCompare x y = genericCompare' (from x) (from y)

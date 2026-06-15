@@ -68,7 +68,10 @@ instance boundedProxy :: Bounded (Proxy a) where
   top = Proxy
 
 class BoundedRecord :: RL.RowList Type -> Row Type -> Row Type -> Constraint
-class OrdRecord rowlist row <= BoundedRecord rowlist row subrow | rowlist -> subrow where
+class
+  OrdRecord rowlist row <=
+  BoundedRecord rowlist row subrow
+  | rowlist -> subrow where
   topRecord :: Proxy rowlist -> Proxy row -> Record subrow
   bottomRecord :: Proxy rowlist -> Proxy row -> Record subrow
 

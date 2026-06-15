@@ -54,7 +54,11 @@ instance semigroupArray :: Semigroup (Array a) where
 instance semigroupProxy :: Semigroup (Proxy a) where
   append _ _ = Proxy
 
-instance semigroupRecord :: (RL.RowToList row list, SemigroupRecord list row row) => Semigroup (Record row) where
+instance semigroupRecord ::
+  ( RL.RowToList row list
+  , SemigroupRecord list row row
+  ) =>
+  Semigroup (Record row) where
   append = appendRecord (Proxy :: Proxy list)
 
 foreign import concatString :: String -> String -> String

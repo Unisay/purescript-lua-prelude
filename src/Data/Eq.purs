@@ -82,7 +82,8 @@ foreign import eqNumberImpl :: Number -> Number -> Boolean
 foreign import eqCharImpl :: Char -> Char -> Boolean
 foreign import eqStringImpl :: String -> String -> Boolean
 
-foreign import eqArrayImpl :: forall a. (a -> a -> Boolean) -> Array a -> Array a -> Boolean
+foreign import eqArrayImpl
+  :: forall a. (a -> a -> Boolean) -> Array a -> Array a -> Boolean
 
 -- | The `Eq1` type class represents type constructors with decidable equality.
 class Eq1 f where

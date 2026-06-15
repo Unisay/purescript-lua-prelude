@@ -62,7 +62,11 @@ instance monoidString :: Monoid String where
 instance monoidArray :: Monoid (Array a) where
   mempty = []
 
-instance monoidRecord :: (RL.RowToList row list, MonoidRecord list row row) => Monoid (Record row) where
+instance monoidRecord ::
+  ( RL.RowToList row list
+  , MonoidRecord list row row
+  ) =>
+  Monoid (Record row) where
   mempty = memptyRecord (Proxy :: Proxy list)
 
 -- | Append a value to itself a certain number of times. For the
@@ -101,7 +105,10 @@ guard false _ = mempty
 -- | A class for records where all fields have `Monoid` instances, used to
 -- | implement the `Monoid` instance for records.
 class MonoidRecord :: RL.RowList Type -> Row Type -> Row Type -> Constraint
-class SemigroupRecord rowlist row subrow <= MonoidRecord rowlist row subrow | rowlist -> row subrow where
+class
+  SemigroupRecord rowlist row subrow <=
+  MonoidRecord rowlist row subrow
+  | rowlist -> row subrow where
   memptyRecord :: Proxy rowlist -> Record subrow
 
 instance monoidRecordNil :: MonoidRecord RL.Nil row () where

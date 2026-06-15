@@ -1,5 +1,5 @@
 { name = "purescript-lua-prelude"
-, dependencies = [ ] : List Text
+, dependencies = [] : List Text
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]
 }
