@@ -17,7 +17,27 @@ local unsafeCoerceImpl = function(lt)
 end
 
 return {
-  ordBooleanImpl = (unsafeCoerceImpl),
+  ordBooleanImpl = (function(lt)
+    return function(eq)
+      return function(gt)
+        return function(x)
+          return function(y)
+            -- Lua 5.1 errors on `<` between booleans, so map to 0/1 first
+            -- (false < true, matching PureScript's `Ord Boolean`).
+            local nx = x and 1 or 0
+            local ny = y and 1 or 0
+            if nx < ny then
+              return lt
+            elseif nx == ny then
+              return eq
+            else
+              return gt
+            end
+          end
+        end
+      end
+    end
+  end),
   ordIntImpl = (unsafeCoerceImpl),
   ordNumberImpl = (unsafeCoerceImpl),
   ordStringImpl = (unsafeCoerceImpl),
