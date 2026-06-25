@@ -1,6 +1,38 @@
 # Changelog
 
-Notable changes to this project are documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Notable changes to this Lua fork of `purescript-prelude` are recorded here. The fork
+tracks its own release line (Lua 5.1 FFI on the [pslua](https://github.com/purescript-lua/purescript-lua)
+compiler); the upstream PureScript history is preserved below. The format
+is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
+fork entries are assembled from fragments in `changelog.d/` with
+[scriv](https://scriv.readthedocs.io/) on each release.
+
+<!-- scriv-insert-here -->
+
+## v7.3.0 - 2026-06-15
+
+### Fixed
+
+- `Ord Boolean` and `Show Number`/`Show String` FFI corrected.
+
+## v7.2.2 - 2026-06-14
+
+### Fixed
+
+- `Array` `Semigroup` append (`concatArray`).
+
+## v7.2.1 - 2026-06-13
+
+### Fixed
+
+- Lua 5.1 FFI compatibility across the prelude.
+
+<!-- scriv-end-here -->
+
+---
+
+The sections below are inherited from the upstream PureScript project and
+predate the Lua fork.
 
 ## [Unreleased]
 
